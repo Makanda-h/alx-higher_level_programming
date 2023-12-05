@@ -1,13 +1,18 @@
 #!/usr/bin/python3
-""" 2-append_write: def append_writre """
+"""
+    5-save_to_json_file: save_to_json_file()
+"""
 
 
-def append_write(filename="", text=""):
+import json
+
+
+def save_to_json_file(my_obj, filename):
     """
-        appends a string to end of a text file (UTF8)
-        Return:
-            no of characters added
+        writes an object to a text file using JSON rep.
+        Args:
+            my_obj (object): object to be serialized.
+            filename (str): name of file where string is stored.
     """
-    with open(filename, 'a+') as f:
-        f.write(text)
-    return len(text)
+    with open(filename, "w") as j_file:
+        json.dump(my_obj, j_file)
