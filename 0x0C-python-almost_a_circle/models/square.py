@@ -1,58 +1,73 @@
 #!/usr/bin/python3
-"""The square"""
-from models.base import Base
+""" Module that contains class Square,
+inheritance of class Rectangle
+"""
 from models.rectangle import Rectangle
 
 
 class Square(Rectangle):
-    """A square class inheriting from rectangle"""
+    """ Class Rectangle """
 
     def __init__(self, size, x=0, y=0, id=None):
-        """Constructs the square's attributes"""
+        """ Initializes instances """
         super().__init__(size, size, x, y, id)
 
     def __str__(self):
-        """String method for rectangle class"""
-        str_res = ("[Square] ({}) {}/{} - {}"
-                   .format(self.id, self.x, self.y, self.width))
-        return str_res
+        """ str special method """
+        str_square = "[Square] "
+        str_id = "({}) ".format(self.id)
+        str_xy = "{}/{} - ".format(self.x, self.y)
+        str_wh = "{}/{}".format(self.width, self.height)
 
-    def area(self):
-        """Returns the area of the square"""
-        return self.width ** 2
+        return str_square + str_id + str_xy + str_wh
 
     @property
     def size(self):
-        """Gets the"""
+        """ Getter size """
         return self.width
 
     @size.setter
     def size(self, value):
-        """Sets the size of square"""
+        """ Setter size """
         self.width = value
         self.height = value
 
+    def __str__(self):
+        """ str special method """
+        str_rectangle = "[Square] "
+        str_id = "({}) ".format(self.id)
+        str_xy = "{}/{} - ".format(self.x, self.y)
+        str_size = "{}".format(self.size)
+
+        return str_rectangle + str_id + str_xy + str_size
+
     def update(self, *args, **kwargs):
-        """Updates the public class
-        Args:
-            *args(any): the list of arguments - no-keyworded arguments
-            **kwargs(any):
-        """
-        if not args and not kwargs:
-            return
-        if args:
-            attributes = ["id", "size", "x", "y"]
-            for i, j in enumerate(args):
-                if i < len(attributes):
-                    setattr(self, attributes[i], j)
+        """ update method """
+        if args is not None and len(args) is not 0:
+            list_atr = ['id', 'size', 'x', 'y']
+            for i in range(len(args)):
+                if list_atr[i] == 'size':
+                    setattr(self, 'width', args[i])
+                    setattr(self, 'height', args[i])
+                else:
+                    setattr(self, list_atr[i], args[i])
         else:
-            for k, v in kwargs.items():
-                if hasattr(self, k):
-                    setattr(self, k, v)
+            for key, value in kwargs.items():
+                if key == 'size':
+                    setattr(self, 'width', value)
+                    setattr(self, 'height', value)
+                else:
+                    setattr(self, key, value)
 
     def to_dictionary(self):
-        """Converts to dictionary"""
-        _map = super().to_dictionary()
-        _map["size"] = _map["width"]
-        del _map["width"], _map["height"]
-        return _map
+        """ Returns a dictionary with attributes """
+        list_atr = ['id', 'size', 'x', 'y']
+        dict_res = {}
+
+        for key in list_atr:
+            if key == 'size':
+                dict_res[key] = getattr(self, 'width')
+            else:
+                dict_res[key] = getattr(self, key)
+
+        return dict_res

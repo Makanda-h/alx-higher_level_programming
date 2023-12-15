@@ -1,2 +1,0 @@
-"""Initializing the python model
-"""
